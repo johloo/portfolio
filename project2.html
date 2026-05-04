@@ -29,7 +29,12 @@
             cursor: none;
         }
 
-        /* Custom cursor */
+        /* Hide cursor on touch devices */
+        @media (hover: none) {
+            body { cursor: auto; }
+            .cursor, .cursor-trail { display: none; }
+        }
+
         .cursor {
             position: fixed;
             width: 10px; height: 10px;
@@ -86,7 +91,7 @@
             display: flex; align-items: center; justify-content: center;
             color: #fff;
             font-size: 1rem;
-            cursor: none;
+            cursor: pointer;
             transition: all 0.2s;
         }
         .lightbox-close:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
@@ -162,14 +167,19 @@
             animation: fadeUp 0.7s 0.1s forwards;
         }
         .project-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+
+        /* MAIN HEADING — fully responsive */
         .project-title {
             font-family: 'Syne', sans-serif;
             font-weight: 800;
-            font-size: clamp(2.4rem, 5vw, 4.2rem);
-            line-height: 1.05;
+            font-size: clamp(1.8rem, 7vw, 4.2rem);
+            line-height: 1.08;
             letter-spacing: -0.04em;
             color: var(--text);
             margin-bottom: 1.5rem;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
             opacity: 0;
             animation: fadeUp 0.7s 0.25s forwards;
         }
@@ -296,6 +306,9 @@
             font-family: 'DM Mono', monospace;
             font-size: 0.72rem;
             color: #7a8090;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .screenshot-img {
             width: 100%;
@@ -316,7 +329,7 @@
             border-radius: 10px;
             overflow: hidden;
             border: 2px solid transparent;
-            cursor: none;
+            cursor: pointer;
             transition: all 0.3s;
             background: var(--surface);
         }
@@ -330,10 +343,12 @@
             gap: 4rem;
             align-items: start;
         }
+
+        /* About heading — responsive */
         .block-heading {
             font-family: 'Syne', sans-serif;
             font-weight: 800;
-            font-size: 1.6rem;
+            font-size: clamp(1.3rem, 4vw, 1.6rem);
             letter-spacing: -0.03em;
             color: var(--text);
             margin-bottom: 1.2rem;
@@ -450,7 +465,7 @@
         .related-heading {
             font-family: 'Syne', sans-serif;
             font-weight: 800;
-            font-size: 1.8rem;
+            font-size: clamp(1.4rem, 5vw, 1.8rem);
             letter-spacing: -0.04em;
             color: var(--text);
             margin-bottom: 0.4rem;
@@ -471,7 +486,7 @@
             overflow: hidden;
             text-decoration: none;
             transition: all 0.3s;
-            cursor: none;
+            cursor: pointer;
         }
         .related-card:hover { transform: translateY(-5px); border-color: rgba(74,240,196,0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
         .related-thumb {
@@ -482,7 +497,13 @@
             color: var(--accent);
         }
         .related-info { padding: 1.2rem; }
-        .related-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--text); margin-bottom: 0.4rem; }
+        .related-title {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+            color: var(--text);
+            margin-bottom: 0.4rem;
+        }
         .related-cat { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
 
         footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2rem 0; }
@@ -506,18 +527,66 @@
         .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
         .reveal.visible { opacity: 1; transform: none; }
 
+        /* =====================
+           TABLET (≤900px)
+        ===================== */
         @media (max-width: 900px) {
             .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
             .content-grid { grid-template-columns: 1fr; gap: 2rem; }
             .sidebar { position: static; }
             .related-grid { grid-template-columns: 1fr 1fr; }
         }
+
+        /* =====================
+           MOBILE (≤600px)
+        ===================== */
         @media (max-width: 600px) {
-            .project-hero { padding: 7rem 1.2rem 4rem; }
-            .project-body { padding: 3rem 1.2rem 4rem; }
-            .related-grid { grid-template-columns: 1fr; }
-            .foot-inner { flex-direction: column; gap: 1.2rem; }
-            .thumb-strip { grid-template-columns: repeat(2, 1fr); }
+            /* Nav */
+            .nav-inner { padding: 0 1.2rem; }
+            .logo { font-size: 1.2rem; }
+            .nav-back { font-size: 0.7rem; }
+
+            /* Hero */
+            .project-hero { padding: 6.5rem 1.2rem 3.5rem; }
+            .project-title {
+                font-size: clamp(1.75rem, 9vw, 2.5rem);
+                line-height: 1.1;
+                letter-spacing: -0.03em;
+            }
+            .project-short-desc { font-size: 0.92rem; }
+            .meta-card { padding: 1.1rem 1.2rem; }
+
+            /* Body */
+            .project-body { padding: 2.5rem 1.2rem 3.5rem; }
+
+            /* Screenshots */
+            .browser-dots span { width: 9px; height: 9px; }
+            .browser-url { font-size: 0.65rem; padding: 0.3rem 0.7rem; }
+            .thumb-strip { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+
+            /* Key features sub-heading */
+            .desc-block h3 { font-size: 1rem !important; }
+
+            /* Sidebar */
+            .sidebar-card { padding: 1.2rem; }
+
+            /* Related */
+            .related-section { padding: 3.5rem 1.2rem; }
+            .related-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .related-thumb { height: 100px; font-size: 2rem; }
+
+            /* Footer */
+            .foot-inner { flex-direction: column; gap: 1.2rem; text-align: center; }
+        }
+
+        /* =====================
+           VERY SMALL (≤380px)
+        ===================== */
+        @media (max-width: 380px) {
+            .project-title { font-size: clamp(1.55rem, 10vw, 1.9rem); }
+            .project-eyebrow { font-size: 0.68rem; }
+            .project-short-desc { font-size: 0.88rem; }
+            .meta-tag { font-size: 0.62rem; padding: 0.25rem 0.55rem; }
         }
     </style>
 </head>
@@ -577,7 +646,6 @@
         <div class="screenshot-section reveal">
             <div class="section-label">Preview</div>
 
-            <!-- Main screenshot -->
             <div class="screenshot-main" id="mainShot" onclick="openLightbox()">
                 <div class="browser-bar">
                     <div class="browser-dots"><span></span><span></span><span></span></div>
@@ -587,7 +655,6 @@
                 <div class="zoom-hint"><i class="fas fa-search-plus"></i></div>
             </div>
 
-            <!-- Thumbnails -->
             <div class="thumb-strip">
                 <div class="thumb active" onclick="setActive(this, 'simplee/simplee1.png')">
                     <img src="simplee/simplee1.png" alt="Screenshot 1">
@@ -608,7 +675,7 @@
                 <p class="desc-text">Simplee Supplements is a frontend landing page project built for a health and wellness brand. The goal was to create a visually compelling, conversion-focused page that clearly communicates the brand's products and value proposition.</p>
                 <p class="desc-text">The design prioritizes clean typography, strong product visuals, and a smooth user experience across all screen sizes — from mobile to desktop.</p>
 
-                <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin:2rem 0 1rem;color:var(--text);">Key Features</h3>
+                <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(0.95rem,3vw,1.1rem);margin:2rem 0 1rem;color:var(--text);">Key Features</h3>
                 <ul class="feature-list">
                     <li>Hero section with strong CTA and product highlight</li>
                     <li>Product showcase with clean card-based layout</li>
@@ -689,7 +756,6 @@
     </footer>
 
     <script>
-    // Custom cursor
     const cursor = document.getElementById('cursor');
     const trail = document.getElementById('cursorTrail');
     let mx = 0, my = 0, tx = 0, ty = 0;
@@ -709,35 +775,28 @@
         el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; trail.style.transform = 'scale(1)'; });
     });
 
-    // Scroll reveal
     const obs = new IntersectionObserver(entries => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
 
-    // Thumbnail switcher
     function setActive(el, src) {
         document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
         el.classList.add('active');
         document.getElementById('mainImg').src = src;
     }
 
-    // Lightbox — open
     function openLightbox() {
         const src = document.getElementById('mainImg').src;
         document.getElementById('lightboxImg').src = src;
         document.getElementById('lightbox').classList.add('open');
         document.body.style.overflow = 'hidden';
     }
-
-    // Lightbox — close
     function closeLightbox(e) {
         if (e && e.target === document.getElementById('lightboxImg')) return;
         document.getElementById('lightbox').classList.remove('open');
         document.body.style.overflow = '';
     }
-
-    // ESC to close
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') closeLightbox();
     });
