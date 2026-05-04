@@ -838,12 +838,11 @@
 
     // Thumbnail switcher
     function setActive(el) {
-        document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
-        el.classList.add('active');
-        // When you add real images, swap the main screenshot here:
-        // const src = el.querySelector('img').src;
-        // document.querySelector('.screenshot-img').src = src;
-    }
+    document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    const src = el.querySelector('img').src;
+    document.querySelector('.screenshot-img').src = src;
+}
     </script>
 </body>
 </html>
