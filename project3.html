@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Sample Monitoring — John Carlo Salva</title>
+    <title>Payroll Management System — John Carlo Salva</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
@@ -50,6 +50,7 @@
             mix-blend-mode: screen;
         }
 
+        /* LIGHTBOX */
         .lightbox {
             position: fixed;
             inset: 0;
@@ -540,23 +541,24 @@
     <div class="project-hero">
         <div class="hero-inner">
             <div>
-                <div class="project-eyebrow">Google Sheets · Automation</div>
-                <h1 class="project-title">Free Sample<br><span>Monitoring Sheet</span></h1>
-                <p class="project-short-desc">A Google Sheets-based monitoring system for tracking free sample requests — from submission to delivery — with an automated dashboard, color-coded statuses, and product breakdown reporting.</p>
+                <div class="project-eyebrow">Web Application</div>
+                <h1 class="project-title">Payroll<br><span>Management System</span></h1>
+                <p class="project-short-desc">A full-featured web-based payroll system built with PHP and MySQL, handling employee records, salary computation, and payslip generation.</p>
             </div>
             <div class="hero-meta">
                 <div class="meta-card">
                     <div class="meta-label">Technologies Used</div>
                     <div class="meta-tags">
-                        <span class="meta-tag">Google Sheets</span>
-                        <span class="meta-tag">Formulas</span>
-                        <span class="meta-tag">Data Validation</span>
-                        <span class="meta-tag">Dashboard</span>
+                        <span class="meta-tag">PHP</span>
+                        <span class="meta-tag">JavaScript</span>
+                        <span class="meta-tag">HTML5</span>
+                        <span class="meta-tag">CSS3</span>
+                        <span class="meta-tag">MySQL</span>
                     </div>
                 </div>
                 <div class="meta-card">
                     <div class="meta-label">Project Type</div>
-                    <div class="meta-value">Sheets Automation · Tracker</div>
+                    <div class="meta-value">Payroll System · Web App</div>
                 </div>
                 <div class="meta-card">
                     <div class="meta-label">Status</div>
@@ -576,22 +578,22 @@
             <div class="screenshot-main" id="mainShot" onclick="openLightbox()">
                 <div class="browser-bar">
                     <div class="browser-dots"><span></span><span></span><span></span></div>
-                    <div class="browser-url">docs.google.com/spreadsheets — Free Sample Monitoring</div>
+                    <div class="browser-url">synovatic.space/payroll</div>
                 </div>
-                <!-- ✏️ Replace with actual screenshots -->
-                <img src="sheet\gsheet1.png" class="screenshot-img" id="mainImg" alt="Free Sample Monitoring Screenshot">
+                <img src="payrollpics/payroll_1.png" class="screenshot-img" id="mainImg" alt="Payroll System Screenshot">
                 <div class="zoom-hint"><i class="fas fa-search-plus"></i></div>
             </div>
 
+            <!-- Thumbnails — fixed with src parameter -->
             <div class="thumb-strip">
-                <div class="thumb active" onclick="setActive(this, 'freesample/freesample1.png')">
-                    <img src="sheet\gsheet2.png" alt="Monitoring Sheet">
+                <div class="thumb active" onclick="setActive(this, 'payrollpics/payroll_1.png')">
+                    <img src="payrollpics/payroll_1.png" alt="Screenshot 1">
                 </div>
-                <div class="thumb" onclick="setActive(this, 'freesample/freesample2.png')">
-                    <img src="sheet\gsheet3.png" alt="Dashboard">
+                <div class="thumb" onclick="setActive(this, 'payrollpics/payroll_2.png')">
+                    <img src="payrollpics/payroll_2.png" alt="Screenshot 2">
                 </div>
-                <div class="thumb" onclick="setActive(this, 'freesample/freesample3.png')">
-                    <img src="sheet\gsheet4.png" alt="Legend">
+                <div class="thumb" onclick="setActive(this, 'payrollpics/payroll_3.png')">
+                    <img src="payrollpics/payroll_3.png" alt="Screenshot 3">
                 </div>
             </div>
         </div>
@@ -600,18 +602,17 @@
         <div class="content-grid">
             <div class="desc-block reveal">
                 <h2 class="block-heading">About the Project</h2>
-                <p class="desc-text">This Google Sheets monitoring system was built for Simplee Supplements to track every free sample request from start to finish. It eliminates the need for manual follow-ups by centralizing all request data in one organized, color-coded sheet.</p>
-                <p class="desc-text">The system includes a live dashboard that auto-calculates key metrics — total requests, delivery rate, product breakdown, and feedback summary — giving the team a quick overview without manual counting.</p>
+                <p class="desc-text">This web-based payroll management system was developed to streamline employee compensation processing for small to medium-sized businesses. It eliminates manual calculations and reduces errors in payroll processing.</p>
+                <p class="desc-text">The system provides a clean dashboard for HR personnel to manage employee records, compute salaries with automatic tax and deduction handling, and generate payslips in a single workflow.</p>
 
                 <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin:2rem 0 1rem;color:var(--text);">Key Features</h3>
                 <ul class="feature-list">
-                    <li>Full request log: name, contact, email, product, quantity, dates, and tracking number</li>
-                    <li>Dropdown validation for Status (Pending, Sent, Delivered, No Reply, Cancelled)</li>
-                    <li>Dropdown validation for Feedback (Positive, Neutral, Negative)</li>
-                    <li>Color-coded status cells for instant visual tracking</li>
-                    <li>Auto-updating Dashboard with summary cards and delivery rate</li>
-                    <li>Product breakdown table showing requests, delivered, and pending per item</li>
-                    <li>Legend sheet with color guide and usage instructions</li>
+                    <li>Employee records management with full CRUD operations</li>
+                    <li>Automated salary computation with configurable deductions and benefits</li>
+                    <li>Tax calculation based on government-mandated rates (SSS, PhilHealth, Pag-IBIG)</li>
+                    <li>Payslip generation and printing per employee</li>
+                    <li>Monthly and annual payroll reports with export options</li>
+                    <li>Role-based access control for HR and admin users</li>
                 </ul>
             </div>
 
@@ -619,24 +620,24 @@
                 <div class="sidebar-card reveal" style="transition-delay:0.1s">
                     <div class="sidebar-heading"><i class="fas fa-code"></i> Tech Stack</div>
                     <div class="tech-stack">
-                        <span class="tech-badge">Google Sheets</span>
-                        <span class="tech-badge">COUNTIF / COUNTIFS</span>
-                        <span class="tech-badge">SUMIF</span>
-                        <span class="tech-badge">IFERROR</span>
-                        <span class="tech-badge">Data Validation</span>
-                        <span class="tech-badge">Conditional Formatting</span>
+                        <span class="tech-badge">PHP 8</span>
+                        <span class="tech-badge">JavaScript</span>
+                        <span class="tech-badge">HTML5</span>
+                        <span class="tech-badge">CSS3</span>
+                        <span class="tech-badge">MySQL</span>
+                        <span class="tech-badge">Bootstrap</span>
                     </div>
                 </div>
                 <div class="sidebar-card reveal" style="transition-delay:0.15s">
                     <div class="sidebar-heading"><i class="fas fa-info-circle"></i> Project Info</div>
-                    <div class="info-row"><span class="info-key">Category</span><span class="info-val">Sheets Tracker</span></div>
-                    <div class="info-row"><span class="info-key">Client</span><span class="info-val">Simplee Supplements</span></div>
+                    <div class="info-row"><span class="info-key">Category</span><span class="info-val">Payroll System</span></div>
+                    <div class="info-row"><span class="info-key">Client</span><span class="info-val">Private</span></div>
                     <div class="info-row"><span class="info-key">Year</span><span class="info-val">2024</span></div>
                     <div class="info-row"><span class="info-key">Status</span><span class="info-val" style="color:#22c55e">Completed</span></div>
                 </div>
                 <div class="cta-card reveal" style="transition-delay:0.2s">
-                    <h4>Need a custom tracker?</h4>
-                    <p>I can build a monitoring sheet tailored to your workflow.</p>
+                    <h4>Interested in this?</h4>
+                    <p>Want a similar system for your business? Let's talk.</p>
                     <a href="index.html#contact" class="cta-btn">Get in Touch →</a>
                 </div>
             </div>
@@ -649,25 +650,25 @@
             <p class="related-sub">// More Work</p>
             <h2 class="related-heading">Other Projects</h2>
             <div class="related-grid">
-                <a href="project-landing.php" class="related-card">
+                <a href="project2.html" class="related-card">
                     <div class="related-thumb"><i class="fas fa-capsules"></i></div>
                     <div class="related-info">
                         <div class="related-title">Simplee Supplements</div>
                         <div class="related-cat">Landing Page · Frontend</div>
                     </div>
                 </a>
-                <a href="project-payroll.php" class="related-card">
-                    <div class="related-thumb"><i class="fas fa-money-check-alt"></i></div>
+                <a href="project3.html" class="related-card">
+                    <div class="related-thumb"><i class="fab fa-google"></i></div>
                     <div class="related-info">
-                        <div class="related-title">Payroll Management System</div>
-                        <div class="related-cat">Payroll · Web App</div>
+                        <div class="related-title">Free Sample Monitoring</div>
+                        <div class="related-cat">Google Workspace</div>
                     </div>
                 </a>
-                <a href="project-hris.php" class="related-card">
+                <a href="project4.html" class="related-card">
                     <div class="related-thumb"><i class="fas fa-users-cog"></i></div>
                     <div class="related-info">
-                        <div class="related-title">Synovatic HRIS</div>
-                        <div class="related-cat">HRIS · Web App</div>
+                        <div class="related-title">UGC Management System</div>
+                        <div class="related-cat">Web App · UGC</div>
                     </div>
                 </a>
             </div>
@@ -678,10 +679,7 @@
     <footer>
         <div class="foot-inner">
             <div class="socials">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="https://www.facebook.com/john.carlo.salva.2025" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
             </div>
             <p class="copy">© 2025 John Carlo Salva. All rights reserved.</p>
         </div>
@@ -712,25 +710,25 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
 
+    // FIXED: thumbnail switcher now swaps main image
     function setActive(el, src) {
         document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
         el.classList.add('active');
         document.getElementById('mainImg').src = src;
     }
 
+    // Lightbox
     function openLightbox() {
         const src = document.getElementById('mainImg').src;
         document.getElementById('lightboxImg').src = src;
         document.getElementById('lightbox').classList.add('open');
         document.body.style.overflow = 'hidden';
     }
-
     function closeLightbox(e) {
         if (e && e.target === document.getElementById('lightboxImg')) return;
         document.getElementById('lightbox').classList.remove('open');
         document.body.style.overflow = '';
     }
-
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') closeLightbox();
     });
