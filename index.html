@@ -1140,10 +1140,11 @@ document.getElementById('contactForm').addEventListener('submit', async function
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
     const h=a.getAttribute('href');
-    if(h==='#')return;
-    e.preventDefault();
+    if(h==='#'||h===''||!h)return;
     const t=document.getElementById(h.slice(1));
-    if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
+    if(!t)return;
+    e.preventDefault();
+    t.scrollIntoView({behavior:'smooth',block:'start'});
   });
 });
 
