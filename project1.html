@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Name — John Carlo Salva</title>
+    <title>Payroll Management System — John Carlo Salva</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
@@ -15,11 +15,6 @@
             --text: #e8eaf0;
             --muted: #5a6070;
             --border: rgba(74, 240, 196, 0.12);
-            --white: #ffffff;
-            --light-bg: #f7f8fa;
-            --light-border: #e8eaed;
-            --dark-text: #12141a;
-            --mid-text: #444750;
         }
 
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,7 +29,6 @@
             cursor: none;
         }
 
-        /* Custom cursor */
         .cursor {
             position: fixed;
             width: 10px; height: 10px;
@@ -56,7 +50,46 @@
             mix-blend-mode: screen;
         }
 
-        /* NAV — dark, same as portfolio */
+        /* LIGHTBOX */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(12px);
+            z-index: 9000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .lightbox.open { opacity: 1; pointer-events: all; }
+        .lightbox-img {
+            max-width: 92vw;
+            max-height: 88vh;
+            border-radius: 10px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+            transform: scale(0.92);
+            transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+            object-fit: contain;
+        }
+        .lightbox.open .lightbox-img { transform: scale(1); }
+        .lightbox-close {
+            position: absolute;
+            top: 1.5rem; right: 1.5rem;
+            width: 42px; height: 42px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
+            font-size: 1rem;
+            cursor: none;
+            transition: all 0.2s;
+        }
+        .lightbox-close:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+
         nav {
             position: fixed;
             top: 0; left: 0; right: 0;
@@ -97,7 +130,6 @@
         .nav-back:hover { color: var(--accent); }
         .nav-back i { font-size: 0.7rem; }
 
-        /* HERO BAND — dark */
         .project-hero {
             background: var(--surface);
             padding: 8rem 2rem 5rem;
@@ -126,11 +158,7 @@
             opacity: 0;
             animation: fadeUp 0.7s 0.1s forwards;
         }
-        .project-eyebrow::before {
-            content: '';
-            width: 28px; height: 1px;
-            background: var(--accent);
-        }
+        .project-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
         .project-title {
             font-family: 'Syne', sans-serif;
             font-weight: 800;
@@ -164,7 +192,7 @@
             animation: fadeLeft 0.7s 0.5s forwards;
         }
         .meta-card {
-            background: var(--surface);
+            background: rgba(255,255,255,0.03);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 1.4rem 1.6rem;
@@ -183,12 +211,7 @@
             font-weight: 600;
             color: var(--text);
         }
-        .meta-tags {
-            display: flex;
-            gap: 0.4rem;
-            flex-wrap: wrap;
-            margin-top: 0.4rem;
-        }
+        .meta-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.4rem; }
         .meta-tag {
             font-family: 'DM Mono', monospace;
             font-size: 0.68rem;
@@ -200,17 +223,12 @@
             border: 1px solid rgba(74, 240, 196, 0.2);
         }
 
-        /* MAIN CONTENT — dark */
         .project-body {
             max-width: 1280px;
             margin: 0 auto;
             padding: 5rem 2rem 6rem;
         }
-
-        /* Screenshot section */
-        .screenshot-section {
-            margin-bottom: 5rem;
-        }
+        .screenshot-section { margin-bottom: 5rem; }
         .section-label {
             font-family: 'DM Mono', monospace;
             font-size: 0.72rem;
@@ -233,8 +251,27 @@
             border: 1px solid var(--border);
             box-shadow: 0 20px 60px rgba(0,0,0,0.4);
             position: relative;
+            cursor: zoom-in;
+            transition: border-color 0.3s;
         }
-        /* Browser chrome mockup */
+        .screenshot-main:hover { border-color: rgba(74,240,196,0.35); }
+        .zoom-hint {
+            position: absolute;
+            bottom: 1rem; right: 1rem;
+            background: rgba(74,240,196,0.12);
+            border: 1px solid rgba(74,240,196,0.3);
+            color: var(--accent);
+            width: 34px; height: 34px;
+            border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .screenshot-main:hover .zoom-hint { opacity: 1; }
+
         .browser-bar {
             background: #1e2128;
             padding: 0.75rem 1.2rem;
@@ -242,14 +279,8 @@
             align-items: center;
             gap: 1rem;
         }
-        .browser-dots {
-            display: flex;
-            gap: 6px;
-        }
-        .browser-dots span {
-            width: 12px; height: 12px;
-            border-radius: 50%;
-        }
+        .browser-dots { display: flex; gap: 6px; }
+        .browser-dots span { width: 12px; height: 12px; border-radius: 50%; }
         .browser-dots span:nth-child(1) { background: #ff5f57; }
         .browser-dots span:nth-child(2) { background: #febc2e; }
         .browser-dots span:nth-child(3) { background: #28c840; }
@@ -264,33 +295,12 @@
         }
         .screenshot-img {
             width: 100%;
-            /* Replace height with actual image */
             height: calc(100% - 44px);
             object-fit: cover;
             object-position: top;
             display: block;
-            background: linear-gradient(160deg, #1a1f2e 0%, #0d1117 100%);
-        }
-        /* Placeholder when no image */
-        .screenshot-placeholder {
-            width: 100%;
-            height: calc(100% - 44px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 1rem;
-            background: linear-gradient(160deg, #1a1f2e 0%, #0d1117 100%);
-            color: var(--muted);
-        }
-        .screenshot-placeholder i { font-size: 3rem; color: rgba(74,240,196,0.2); }
-        .screenshot-placeholder p {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.78rem;
-            letter-spacing: 0.1em;
         }
 
-        /* Thumbnail strip */
         .thumb-strip {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -308,26 +318,14 @@
         }
         .thumb.active { border-color: var(--accent); }
         .thumb:hover { border-color: rgba(74,240,196,0.5); transform: translateY(-2px); }
-        .thumb-inner {
-            width: 100%; height: 100%;
-            background: linear-gradient(160deg, #1a1f2e 0%, #0d1117 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(74,240,196,0.15);
-            font-size: 1.5rem;
-        }
+        .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        /* Content grid */
         .content-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 4rem;
             align-items: start;
         }
-
-        /* Description */
-        .desc-block { }
         .block-heading {
             font-family: 'Syne', sans-serif;
             font-weight: 800;
@@ -342,12 +340,7 @@
             color: #9aa0b0;
             margin-bottom: 1.2rem;
         }
-
-        /* Feature list */
-        .feature-list {
-            list-style: none;
-            margin-top: 2rem;
-        }
+        .feature-list { list-style: none; margin-top: 2rem; }
         .feature-list li {
             display: flex;
             align-items: flex-start;
@@ -368,7 +361,6 @@
             flex-shrink: 0;
         }
 
-        /* Sidebar */
         .sidebar { position: sticky; top: 7rem; }
         .sidebar-card {
             background: var(--surface);
@@ -390,17 +382,10 @@
             gap: 0.5rem;
         }
         .sidebar-heading i { color: var(--accent); font-size: 0.85rem; }
-
-        /* Tech stack */
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
+        .tech-stack { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tech-badge {
             font-family: 'DM Mono', monospace;
             font-size: 0.72rem;
-            letter-spacing: 0.05em;
             padding: 0.4rem 0.9rem;
             border-radius: 4px;
             background: rgba(255,255,255,0.04);
@@ -408,13 +393,7 @@
             border: 1px solid var(--border);
             transition: all 0.2s;
         }
-        .tech-badge:hover {
-            background: rgba(74,240,196,0.08);
-            border-color: rgba(74,240,196,0.3);
-            color: var(--accent);
-        }
-
-        /* Project info rows */
+        .tech-badge:hover { background: rgba(74,240,196,0.08); border-color: rgba(74,240,196,0.3); color: var(--accent); }
         .info-row {
             display: flex;
             justify-content: space-between;
@@ -432,8 +411,6 @@
             color: var(--muted);
         }
         .info-val { color: var(--text); font-weight: 500; }
-
-        /* CTA */
         .cta-card {
             background: linear-gradient(135deg, var(--accent) 0%, #00c4a8 50%, var(--accent2) 100%);
             border-radius: 14px;
@@ -447,12 +424,7 @@
             color: var(--bg);
             margin-bottom: 0.5rem;
         }
-        .cta-card p {
-            font-size: 0.82rem;
-            color: rgba(6,8,15,0.7);
-            margin-bottom: 1.2rem;
-            line-height: 1.5;
-        }
+        .cta-card p { font-size: 0.82rem; color: rgba(6,8,15,0.7); margin-bottom: 1.2rem; line-height: 1.5; }
         .cta-btn {
             display: inline-block;
             background: var(--bg);
@@ -467,21 +439,10 @@
             font-weight: 500;
             transition: all 0.3s;
         }
-        .cta-btn:hover {
-            background: rgba(6,8,15,0.85);
-            transform: translateY(-2px);
-        }
+        .cta-btn:hover { background: rgba(6,8,15,0.85); transform: translateY(-2px); }
 
-        /* Related projects */
-        .related-section {
-            background: var(--bg);
-            padding: 5rem 2rem;
-            margin-top: 0;
-        }
-        .related-inner {
-            max-width: 1280px;
-            margin: 0 auto;
-        }
+        .related-section { background: var(--surface); border-top: 1px solid var(--border); padding: 5rem 2rem; }
+        .related-inner { max-width: 1280px; margin: 0 auto; }
         .related-heading {
             font-family: 'Syne', sans-serif;
             font-weight: 800;
@@ -498,13 +459,9 @@
             letter-spacing: 0.15em;
             margin-bottom: 2.5rem;
         }
-        .related-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-        }
+        .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
         .related-card {
-            background: var(--surface);
+            background: var(--bg);
             border: 1px solid var(--border);
             border-radius: 12px;
             overflow: hidden;
@@ -512,52 +469,20 @@
             transition: all 0.3s;
             cursor: none;
         }
-        .related-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(74,240,196,0.4);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
+        .related-card:hover { transform: translateY(-5px); border-color: rgba(74,240,196,0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
         .related-thumb {
             height: 140px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             font-size: 2.5rem;
-            background: linear-gradient(135deg, rgba(74,240,196,0.15), rgba(124,111,255,0.15));
+            background: linear-gradient(135deg, rgba(74,240,196,0.1), rgba(124,111,255,0.1));
             color: var(--accent);
         }
-        .related-info {
-            padding: 1.2rem;
-        }
-        .related-title {
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: var(--text);
-            margin-bottom: 0.4rem;
-        }
-        .related-cat {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.68rem;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
+        .related-info { padding: 1.2rem; }
+        .related-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--text); margin-bottom: 0.4rem; }
+        .related-cat { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
 
-        /* Footer */
-        footer {
-            background: var(--bg);
-            border-top: 1px solid var(--border);
-            padding: 2rem 0;
-        }
-        .foot-inner {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2rem 0; }
+        .foot-inner { max-width: 1280px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
         .socials { display: flex; gap: 1rem; }
         .socials a {
             width: 36px; height: 36px;
@@ -570,35 +495,18 @@
             transition: all 0.3s;
         }
         .socials a:hover { border-color: var(--accent); color: var(--accent); }
-        .copy {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--muted);
-        }
+        .copy { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); }
 
-        /* Animations */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeLeft {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        .reveal {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
-        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeLeft { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
         .reveal.visible { opacity: 1; transform: none; }
 
-        /* Responsive */
         @media (max-width: 900px) {
             .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
             .content-grid { grid-template-columns: 1fr; gap: 2rem; }
             .sidebar { position: static; }
             .related-grid { grid-template-columns: 1fr 1fr; }
-            .thumb-strip { grid-template-columns: repeat(3, 1fr); }
         }
         @media (max-width: 600px) {
             .project-hero { padding: 7rem 1.2rem 4rem; }
@@ -612,6 +520,12 @@
 <body>
     <div class="cursor" id="cursor"></div>
     <div class="cursor-trail" id="cursorTrail"></div>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <div class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></div>
+        <img class="lightbox-img" id="lightboxImg" src="" alt="Preview">
+    </div>
 
     <!-- NAV -->
     <nav>
@@ -627,17 +541,13 @@
     <div class="project-hero">
         <div class="hero-inner">
             <div>
-                <!-- ✏️ EDIT: Project category -->
                 <div class="project-eyebrow">Web Application</div>
-                <!-- ✏️ EDIT: Project title + highlighted word -->
                 <h1 class="project-title">Payroll<br><span>Management System</span></h1>
-                <!-- ✏️ EDIT: Short description -->
                 <p class="project-short-desc">A full-featured web-based payroll system built with PHP and MySQL, handling employee records, salary computation, and payslip generation.</p>
             </div>
             <div class="hero-meta">
                 <div class="meta-card">
                     <div class="meta-label">Technologies Used</div>
-                    <!-- ✏️ EDIT: Add/remove tags -->
                     <div class="meta-tags">
                         <span class="meta-tag">PHP</span>
                         <span class="meta-tag">JavaScript</span>
@@ -648,7 +558,6 @@
                 </div>
                 <div class="meta-card">
                     <div class="meta-label">Project Type</div>
-                    <!-- ✏️ EDIT: Project type -->
                     <div class="meta-value">Payroll System · Web App</div>
                 </div>
                 <div class="meta-card">
@@ -665,47 +574,38 @@
         <!-- Screenshots -->
         <div class="screenshot-section reveal">
             <div class="section-label">Preview</div>
-            <!-- Main screenshot -->
-            <div class="screenshot-main" id="mainShot">
+
+            <div class="screenshot-main" id="mainShot" onclick="openLightbox()">
                 <div class="browser-bar">
-                    <div class="browser-dots">
-                        <span></span><span></span><span></span>
-                    </div>
-                    <!-- ✏️ EDIT: URL shown in browser bar -->
+                    <div class="browser-dots"><span></span><span></span><span></span></div>
                     <div class="browser-url">synovatic.space/payroll</div>
                 </div>
-                <!-- ✏️ REPLACE: Add actual screenshot -->
-                <img src="payrollpics\payroll_2.png " class="screenshot-img" alt="Payroll System Screenshot">
-                <div class="screenshot-placeholder">
-                    <i class="fas fa-money-check-alt"></i>
-                    <p>Add screenshot here</p>
-                </div>
+                <img src="payrollpics/payroll_1.png" class="screenshot-img" id="mainImg" alt="Payroll System Screenshot">
+                <div class="zoom-hint"><i class="fas fa-search-plus"></i></div>
             </div>
 
-            <!-- Thumbnail strip — add more screenshots here -->
+            <!-- Thumbnails — fixed with src parameter -->
             <div class="thumb-strip">
-    <div class="thumb active" onclick="setActive(this)">
-        <img src="payrollpics\payroll_1.png" style="width:100%;height:100%;object-fit:cover;">
-    </div>
-    <div class="thumb" onclick="setActive(this)">
-        <img src="payrollpics\payroll_3.png" style="width:100%;height:100%;object-fit:cover;">
-    </div>
-    <div class="thumb" onclick="setActive(this)">
-        <img src="payrollpics\payroll_4.png" style="width:100%;height:100%;object-fit:cover;">
-    </div>
-</div>
+                <div class="thumb active" onclick="setActive(this, 'payrollpics/payroll_1.png')">
+                    <img src="payrollpics/payroll_1.png" alt="Screenshot 1">
+                </div>
+                <div class="thumb" onclick="setActive(this, 'payrollpics/payroll_2.png')">
+                    <img src="payrollpics/payroll_2.png" alt="Screenshot 2">
+                </div>
+                <div class="thumb" onclick="setActive(this, 'payrollpics/payroll_3.png')">
+                    <img src="payrollpics/payroll_3.png" alt="Screenshot 3">
+                </div>
+            </div>
+        </div>
 
         <!-- Description + Sidebar -->
         <div class="content-grid">
-            <!-- Left: Description -->
             <div class="desc-block reveal">
                 <h2 class="block-heading">About the Project</h2>
-                <!-- ✏️ EDIT: Full description -->
                 <p class="desc-text">This web-based payroll management system was developed to streamline employee compensation processing for small to medium-sized businesses. It eliminates manual calculations and reduces errors in payroll processing.</p>
                 <p class="desc-text">The system provides a clean dashboard for HR personnel to manage employee records, compute salaries with automatic tax and deduction handling, and generate payslips in a single workflow.</p>
 
                 <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin:2rem 0 1rem;color:var(--text);">Key Features</h3>
-                <!-- ✏️ EDIT: Add/remove features -->
                 <ul class="feature-list">
                     <li>Employee records management with full CRUD operations</li>
                     <li>Automated salary computation with configurable deductions and benefits</li>
@@ -716,12 +616,9 @@
                 </ul>
             </div>
 
-            <!-- Right: Sidebar -->
             <div class="sidebar">
-                <!-- Tech Stack -->
                 <div class="sidebar-card reveal" style="transition-delay:0.1s">
                     <div class="sidebar-heading"><i class="fas fa-code"></i> Tech Stack</div>
-                    <!-- ✏️ EDIT: Technologies -->
                     <div class="tech-stack">
                         <span class="tech-badge">PHP 8</span>
                         <span class="tech-badge">JavaScript</span>
@@ -731,30 +628,13 @@
                         <span class="tech-badge">Bootstrap</span>
                     </div>
                 </div>
-
-                <!-- Project Info -->
                 <div class="sidebar-card reveal" style="transition-delay:0.15s">
                     <div class="sidebar-heading"><i class="fas fa-info-circle"></i> Project Info</div>
-                    <!-- ✏️ EDIT: Project details -->
-                    <div class="info-row">
-                        <span class="info-key">Category</span>
-                        <span class="info-val">Payroll System</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-key">Client</span>
-                        <span class="info-val">Private</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-key">Year</span>
-                        <span class="info-val">2024</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-key">Status</span>
-                        <span class="info-val" style="color:#22c55e">Completed</span>
-                    </div>
+                    <div class="info-row"><span class="info-key">Category</span><span class="info-val">Payroll System</span></div>
+                    <div class="info-row"><span class="info-key">Client</span><span class="info-val">Private</span></div>
+                    <div class="info-row"><span class="info-key">Year</span><span class="info-val">2024</span></div>
+                    <div class="info-row"><span class="info-key">Status</span><span class="info-val" style="color:#22c55e">Completed</span></div>
                 </div>
-
-                <!-- CTA -->
                 <div class="cta-card reveal" style="transition-delay:0.2s">
                     <h4>Interested in this?</h4>
                     <p>Want a similar system for your business? Let's talk.</p>
@@ -769,27 +649,26 @@
         <div class="related-inner">
             <p class="related-sub">// More Work</p>
             <h2 class="related-heading">Other Projects</h2>
-            <!-- ✏️ EDIT: Link to other project pages -->
             <div class="related-grid">
-                <a href="project-hris.php" class="related-card">
-                    <div class="related-thumb"><i class="fas fa-users-cog"></i></div>
+                <a href="project2.html" class="related-card">
+                    <div class="related-thumb"><i class="fas fa-capsules"></i></div>
                     <div class="related-info">
-                        <div class="related-title">Synovatic HRIS</div>
-                        <div class="related-cat">HRIS · Web App</div>
+                        <div class="related-title">Simplee Supplements</div>
+                        <div class="related-cat">Landing Page · Frontend</div>
                     </div>
                 </a>
-                <a href="project-sheets.php" class="related-card">
+                <a href="project3.html" class="related-card">
                     <div class="related-thumb"><i class="fab fa-google"></i></div>
                     <div class="related-info">
-                        <div class="related-title">Google Sheets System</div>
+                        <div class="related-title">Free Sample Monitoring</div>
                         <div class="related-cat">Google Workspace</div>
                     </div>
                 </a>
-                <a href="project-landing.php" class="related-card">
-                    <div class="related-thumb"><i class="fas fa-capsules"></i></div>
+                <a href="project4.html" class="related-card">
+                    <div class="related-thumb"><i class="fas fa-users-cog"></i></div>
                     <div class="related-info">
-                        <div class="related-title">Supplements Landing Page</div>
-                        <div class="related-cat">Web · Frontend</div>
+                        <div class="related-title">UGC Management System</div>
+                        <div class="related-cat">Web App · UGC</div>
                     </div>
                 </a>
             </div>
@@ -800,17 +679,13 @@
     <footer>
         <div class="foot-inner">
             <div class="socials">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="https://www.facebook.com/john.carlo.salva.2025" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
             </div>
             <p class="copy">© 2025 John Carlo Salva. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-    // Custom cursor
     const cursor = document.getElementById('cursor');
     const trail = document.getElementById('cursorTrail');
     let mx = 0, my = 0, tx = 0, ty = 0;
@@ -825,24 +700,38 @@
         requestAnimationFrame(animCursor);
     }
     animCursor();
-    document.querySelectorAll('a, button, .thumb, .related-card').forEach(el => {
+    document.querySelectorAll('a, button, .thumb, .related-card, .screenshot-main').forEach(el => {
         el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2)'; trail.style.transform = 'scale(1.5)'; });
         el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; trail.style.transform = 'scale(1)'; });
     });
 
-    // Reveal on scroll
     const obs = new IntersectionObserver(entries => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
 
-    // Thumbnail switcher
-    function setActive(el) {
-    document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-    const src = el.querySelector('img').src;
-    document.querySelector('.screenshot-img').src = src;
-}
+    // FIXED: thumbnail switcher now swaps main image
+    function setActive(el, src) {
+        document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+        el.classList.add('active');
+        document.getElementById('mainImg').src = src;
+    }
+
+    // Lightbox
+    function openLightbox() {
+        const src = document.getElementById('mainImg').src;
+        document.getElementById('lightboxImg').src = src;
+        document.getElementById('lightbox').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(e) {
+        if (e && e.target === document.getElementById('lightboxImg')) return;
+        document.getElementById('lightbox').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeLightbox();
+    });
     </script>
 </body>
 </html>
