@@ -17,7 +17,7 @@
   --border:rgba(74,240,196,0.12);--glow:rgba(74,240,196,0.3);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:auto}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:var(--bg)}
@@ -951,14 +951,17 @@ function showHome(){
 
 function showProject(id){
   currentProj=id;
-  renderProject(id);
   document.getElementById('homeView').classList.remove('active');
   document.getElementById('projView').classList.add('active');
   document.getElementById('homeLinks').style.display='none';
   document.getElementById('backBtn').style.display='flex';
-  window.scrollTo({top:0,left:0,behavior:'instant'});
   document.documentElement.scrollTop=0;
   document.body.scrollTop=0;
+  setTimeout(()=>{
+    renderProject(id);
+    document.documentElement.scrollTop=0;
+    document.body.scrollTop=0;
+  },10);
 }
 
 function renderProject(id){
