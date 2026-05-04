@@ -569,7 +569,6 @@
     <!-- MAIN BODY -->
     <div class="project-body">
 
-        <!-- Screenshots -->
         <div class="screenshot-section reveal">
             <div class="section-label">Preview</div>
 
@@ -578,25 +577,24 @@
                     <div class="browser-dots"><span></span><span></span><span></span></div>
                     <div class="browser-url">synovatic.space/ugc</div>
                 </div>
-                <!-- ✏️ Replace with actual screenshots -->
                 <img src="ugc/ugc1.png" class="screenshot-img" id="mainImg" alt="UGC Management System Screenshot">
                 <div class="zoom-hint"><i class="fas fa-search-plus"></i></div>
             </div>
 
+            <!-- FIXED: thumb img src matches onclick src -->
             <div class="thumb-strip">
                 <div class="thumb active" onclick="setActive(this, 'ugc/ugc1.png')">
-                    <img src="ugc/ugc2.png" alt="Creator Tracker">
+                    <img src="ugc/ugc1.png" alt="Screenshot 1">
                 </div>
                 <div class="thumb" onclick="setActive(this, 'ugc/ugc2.png')">
-                    <img src="ugc/ugc3.png" alt="Dashboard">
+                    <img src="ugc/ugc2.png" alt="Screenshot 2">
                 </div>
                 <div class="thumb" onclick="setActive(this, 'ugc/ugc3.png')">
-                    <img src="ugc/ugc4.png" alt="Content Pipeline">
+                    <img src="ugc/ugc3.png" alt="Screenshot 3">
                 </div>
             </div>
         </div>
 
-        <!-- Description + Sidebar -->
         <div class="content-grid">
             <div class="desc-block reveal">
                 <h2 class="block-heading">About the Project</h2>
@@ -642,27 +640,27 @@
         </div>
     </div>
 
-    <!-- RELATED PROJECTS -->
+    <!-- RELATED PROJECTS — FIXED: .php → .html -->
     <div class="related-section">
         <div class="related-inner">
             <p class="related-sub">// More Work</p>
             <h2 class="related-heading">Other Projects</h2>
             <div class="related-grid">
-                <a href="project-sheets-freesample.php" class="related-card">
+                <a href="project3.html" class="related-card">
                     <div class="related-thumb"><i class="fas fa-box-open"></i></div>
                     <div class="related-info">
                         <div class="related-title">Free Sample Monitoring</div>
                         <div class="related-cat">Google Sheets · Tracker</div>
                     </div>
                 </a>
-                <a href="project-landing.php" class="related-card">
+                <a href="project2.html" class="related-card">
                     <div class="related-thumb"><i class="fas fa-capsules"></i></div>
                     <div class="related-info">
                         <div class="related-title">Simplee Supplements</div>
                         <div class="related-cat">Landing Page · Frontend</div>
                     </div>
                 </a>
-                <a href="project-payroll.php" class="related-card">
+                <a href="project1.html" class="related-card">
                     <div class="related-thumb"><i class="fas fa-money-check-alt"></i></div>
                     <div class="related-info">
                         <div class="related-title">Payroll Management System</div>
@@ -673,14 +671,11 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
+    <!-- FOOTER — FIXED: actual Facebook link -->
     <footer>
         <div class="foot-inner">
             <div class="socials">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="https://www.facebook.com/john.carlo.salva.2025" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
             </div>
             <p class="copy">© 2025 John Carlo Salva. All rights reserved.</p>
         </div>
@@ -723,13 +718,11 @@
         document.getElementById('lightbox').classList.add('open');
         document.body.style.overflow = 'hidden';
     }
-
     function closeLightbox(e) {
         if (e && e.target === document.getElementById('lightboxImg')) return;
         document.getElementById('lightbox').classList.remove('open');
         document.body.style.overflow = '';
     }
-
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') closeLightbox();
     });
