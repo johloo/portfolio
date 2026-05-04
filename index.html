@@ -989,7 +989,7 @@ function renderProject(id){
   document.getElementById('pCtaP').textContent=p.ctaP;
   document.getElementById('relatedGrid').innerHTML=p.related.map(rid=>{
     const rp=PROJECTS.find(x=>x.id===rid);
-    return `<a class="related-card" href="#" onclick="showProject(${rp.id});return false">
+    return `<a class="related-card" href="javascript:void(0)" onclick="showProject(${rp.id})">
       <div class="related-thumb"><img src="${rp.thumb}" alt="${rp.titleLine1}"/></div>
       <div class="related-info">
         <div class="related-title">${rp.titleLine1} ${rp.titleHl}</div>
