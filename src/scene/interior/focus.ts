@@ -41,7 +41,7 @@ interface View {
 }
 
 const VIEWS: Record<InteriorFocus['kind'], View> = {
-  about: { eye: [-1.0, 2.0, 3.6], target: [-1.0, 1.1, -0.9], min: 1.8, max: 4.8 },
+  about: { eye: [-0.4, 4.6, 10.6], target: [-0.6, 0.9, -0.8], min: 2, max: 15 },
   skills: { eye: [0, 1.9, 2.3], target: [0, 1.4, 0], min: 1.2, max: 2.6 },
   contact: { eye: [0, 2.6, 6.4], target: [0, 2.0, -0.8], min: 2.5, max: 9 },
   project: { eye: [0.6, 3.6, 9.6], target: [0, 1.2, 0], min: 3, max: 14.5 },

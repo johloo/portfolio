@@ -10,6 +10,7 @@ import { mulberry32 } from '../noise'
 import { Avatar } from '../stage/Avatar'
 import type { AvatarAnim } from '../stage/Avatar'
 import { Desk, Monitor } from '../stage/scenes'
+import { INTERIOR_POS } from './focus'
 
 interface RoomProps {
   reduced: boolean
@@ -256,6 +257,22 @@ function LabAvatar({ reduced, wsRy }: { reduced: boolean; wsRy: number }) {
 
 export function LabRoom({ reduced }: RoomProps) {
   const WALL = '#2c3b69'
+  // Cut-away walls: a wall disappears while the camera is outside it, so zooming out shows the whole lab.
+  const back = useRef<Group>(null)
+  const front = useRef<Group>(null)
+  const left = useRef<Group>(null)
+  const right = useRef<Group>(null)
+  const ceiling = useRef<Group>(null)
+  useFrame(({ camera }) => {
+    const x = camera.position.x - INTERIOR_POS.x
+    const y = camera.position.y - INTERIOR_POS.y
+    const z = camera.position.z - INTERIOR_POS.z
+    if (back.current) back.current.visible = z > -5.3
+    if (front.current) front.current.visible = z < 5.3
+    if (left.current) left.current.visible = x > -5.8
+    if (right.current) right.current.visible = x < 5.8
+    if (ceiling.current) ceiling.current.visible = y < 3.9
+  })
   return (
     <>
       {/* shell */}
@@ -264,6 +281,7 @@ export function LabRoom({ reduced }: RoomProps) {
       <Torus p={[0, 0.04, -0.6]} r0={3.3} t={0.04} c="#22d3ee" />
       <Torus p={[0, 0.04, -0.6]} r0={2.2} t={0.025} c="#a78bfa" />
       {/* back wall with a big window onto space */}
+      <group ref={back}>
       <Box p={[-4.6, 2, -5.5]} s={[2.8, 4, 0.3]} c={WALL} />
       <Box p={[4.6, 2, -5.5]} s={[2.8, 4, 0.3]} c={WALL} />
       <Box p={[0, 0.5, -5.5]} s={[6.4, 1, 0.3]} c={WALL} />
@@ -273,20 +291,29 @@ export function LabRoom({ reduced }: RoomProps) {
       {[-4.6, 4.6].map((x) => (
         <Box key={x} p={[x, 2.0, -5.32]} s={[1.8, 1.2, 0.05]} c="#0b1220" e="#22d3ee" ei={0.5} />
       ))}
+      </group>
       {/* side + front walls */}
-      <Box p={[-6, 2, 0]} s={[0.3, 4, 11]} c={WALL} />
-      <Box p={[6, 2, 0]} s={[0.3, 4, 11]} c={WALL} />
-      <Box p={[0, 2, 5.5]} s={[12, 4, 0.3]} c={WALL} />
-      {[-2.2, 2.4].map((z) => (
-        <Box key={z} p={[5.82, 2.1, z]} s={[0.05, 1.5, 2.2]} c="#1d4ed8" e="#38bdf8" ei={0.55} o={0.85} />
-      ))}
-      <Box p={[0, 1.3, 5.3]} s={[1.7, 2.6, 0.1]} c="#0f172a" />
-      <Box p={[0, 1.3, 5.25]} s={[1.9, 2.8, 0.05]} c="#22d3ee" e="#22d3ee" ei={0.5} />
+      <group ref={left}>
+        <Box p={[-6, 2, 0]} s={[0.3, 4, 11]} c={WALL} />
+      </group>
+      <group ref={right}>
+        <Box p={[6, 2, 0]} s={[0.3, 4, 11]} c={WALL} />
+        {[-2.2, 2.4].map((z) => (
+          <Box key={z} p={[5.82, 2.1, z]} s={[0.05, 1.5, 2.2]} c="#1d4ed8" e="#38bdf8" ei={0.55} o={0.85} />
+        ))}
+      </group>
+      <group ref={front}>
+        <Box p={[0, 2, 5.5]} s={[12, 4, 0.3]} c={WALL} />
+        <Box p={[0, 1.3, 5.3]} s={[1.7, 2.6, 0.1]} c="#0f172a" />
+        <Box p={[0, 1.3, 5.25]} s={[1.9, 2.8, 0.05]} c="#22d3ee" e="#22d3ee" ei={0.5} />
+      </group>
       {/* ceiling + lights */}
-      <Box p={[0, 4.1, 0]} s={[12.3, 0.2, 11.3]} c="#232f58" />
-      {[[-3, -2.5], [3, -2.5], [-3, 2.5], [3, 2.5], [0, 0], [0, -4]].map(([x, z], i) => (
-        <Box key={i} p={[x, 3.96, z]} s={[1.8, 0.05, 0.7]} c="#ffffff" e="#e0f2fe" ei={0.9} />
-      ))}
+      <group ref={ceiling}>
+        <Box p={[0, 4.1, 0]} s={[12.3, 0.2, 11.3]} c="#232f58" />
+        {[[-3, -2.5], [3, -2.5], [-3, 2.5], [3, 2.5], [0, 0], [0, -4]].map(([x, z], i) => (
+          <Box key={i} p={[x, 3.96, z]} s={[1.8, 0.05, 0.7]} c="#ffffff" e="#e0f2fe" ei={0.9} />
+        ))}
+      </group>
       <pointLight position={[-1, 3.4, -1]} intensity={22} color="#ffe2b0" distance={0} decay={2} />
       <pointLight position={[3, 2.4, -3]} intensity={16} color="#67e8f9" distance={0} decay={2} />
       <pointLight position={[-3.5, 2.4, 3]} intensity={10} color="#a78bfa" distance={0} decay={2} />
