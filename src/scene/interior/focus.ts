@@ -42,10 +42,10 @@ interface View {
 
 const VIEWS: Record<InteriorFocus['kind'], View> = {
   about: { eye: [-0.4, 4.6, 10.6], target: [-0.6, 0.9, -0.8], min: 2, max: 15 },
-  skills: { eye: [0, 1.9, 2.3], target: [0, 1.4, 0], min: 1.2, max: 2.6 },
-  contact: { eye: [0, 2.6, 6.4], target: [0, 2.0, -0.8], min: 2.5, max: 9 },
-  project: { eye: [0.6, 3.6, 9.6], target: [0, 1.2, 0], min: 3, max: 14.5 },
-  exp: { eye: [0.5, 3.4, 8.2], target: [0, 1.0, 0], min: 3, max: 13.5, minPolar: 0.5 },
+  skills: { eye: [0, 9.5, 16.5], target: [0, 2.2, 0], min: 3, max: 24 },
+  contact: { eye: [0, 5.4, 13.5], target: [0, 2.6, -0.8], min: 3, max: 19 },
+  project: { eye: [0.6, 6.4, 10.2], target: [0, 1.0, -0.6], min: 3, max: 19 },
+  exp: { eye: [0.5, 4.4, 11], target: [0, 1.0, 0], min: 3, max: 16, minPolar: 0.5 },
 }
 
 export function interiorPose(f: InteriorFocus, aspect: number) {
